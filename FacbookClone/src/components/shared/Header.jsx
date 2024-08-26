@@ -5,11 +5,12 @@ import '../../css/header.css'
 import DropDownBar from './DropDownBar'
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import NotificationList from './NotificationList'
 
 function Header() {
 
   const { avatar } = useSelector(state => state.profile);
-
+  const [showNotifications, setShowNotifications] = useState(false);
 const [dropbar,setDropBar] = useState(false);
 function toggle(){
   setDropBar(false);
@@ -33,11 +34,11 @@ function toggle(){
         </div>
     
         <div className="noti_action">
-        <i class="ri-notification-4-fill"></i>
+        <i class="ri-notification-4-fill" onClick={() => setShowNotifications(!showNotifications)}></i>
         <img src={`data:image/jpg;base64,${avatar}`} alt="" onClick={()=>setDropBar((prev) => !prev)}/>
 
-        {dropbar === true?<div><DropDownBar toggleDropBar={toggle}/>
-          </div>:<div></div>}
+        {dropbar && <div><DropDownBar toggleDropBar={toggle} /></div>}
+        {showNotifications && <NotificationList />}
         
         </div>
     </div>
